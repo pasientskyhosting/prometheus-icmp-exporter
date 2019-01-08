@@ -14,7 +14,7 @@ Provides a whitebox latency prometheus exporter, easy to manage via ansible. The
 git clone $repo
     && cd $repo \
     && docker build -t ping . \
-    && docker run -ti -p 1222:1222 -v $(pwd)/example.conf.yml:/etc/ping/hosts.yml ping
+    && docker run -ti -p 9346:9346 -v $(pwd)/example.conf.yml:/etc/ping/hosts.yml ping
 ```
 
 ## Docker-compose
@@ -57,7 +57,7 @@ ipconfig: {{ ansible_default_ipv4.address }}
 $ docker-compose up -d
 Starting ping ... 
 Starting ping ... done
-$ curl 127.0.0.1:1222
+$ curl 127.0.0.1:9346
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
 process_virtual_memory_bytes 235905024.0
@@ -85,9 +85,11 @@ ping{host="8.8.8.8",metric="min"} 26.0
 ping{host="9.9.9.9",metric="avg"} 27.0
 ping{host="8.8.8.8",metric="max"} 26.0
 ping{host="9.9.9.9",metric="max"} 27.0
+ping{host="8.8.8.8",metric="mtu"} 1472.0
 ping{host="9.9.9.9",metric="loss"} 0.0
 ping{host="9.9.9.9",metric="min"} 27.0
 ping{host="8.8.8.8",metric="loss"} 0.0
 ping{host="8.8.8.8",metric="avg"} 26.0
+ping{host="9.9.9.9",metric="mtu"} 1472.0
 ```
 

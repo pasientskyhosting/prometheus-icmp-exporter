@@ -6,7 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    environment:
+      - ICMP_METRICS_PORT=9346
+      - ICMP_COLLECTION_INTERVAL=60
     ports:
-      - "1222:1222"
+      - "9346:9346"
     volumes:
       - ./example.conf.yml:/etc/ping/hosts.yml

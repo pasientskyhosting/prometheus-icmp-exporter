@@ -31,7 +31,7 @@ def ping(targets):
     cmd = ['fping', '-q', '-s', '-c3', '-b {0}'.format(mtu)]
     p = subprocess.Popen(' '.join(cmd)+' '+' '.join(targets), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     res = p.communicate()
-    for line in res[1].split('\n'):
+    for line in res[1].decode('utf-8').split('\n'):
         if lineres.search(line):
             try:
                 ret = handle(line, ret, mtu)
@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
         for host in pings:
             if 'lat' in pings[host]:
-                for metric, value in pings[host]['lat'].iteritems():
+                for metric, value in pings[host]['lat'].items():
                     metrics.labels(host, metric).set(value)
             if 'loss' in pings[host]:
                 metrics.labels(host, 'loss').set(pings[host]['loss'])

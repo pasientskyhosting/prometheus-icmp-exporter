@@ -43,7 +43,7 @@ def failhandle(line, ret, mtu):
     host = lineres.search(line).groups()[0].replace(' ', '').replace(':', '').strip(' ')
     ret[host] = {}
     ret[host]['loss'] = "100"
-    ret[host]['loss']['mtu'] = mtu
+    ret[host]['mtu'] = mtu
     return ret
 
 def handle(line, ret, mtu):

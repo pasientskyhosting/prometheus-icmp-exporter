@@ -28,7 +28,7 @@ def ping(targets):
     mtu = get_mtu(get_interface(targets[0]))
     mtu = mtu if mtu else 1500
     mtu = str(int(mtu) - 28)
-    cmd = ['fping', '-q', '-s', '-c5', '-M', '-b {0}'.format(mtu)]
+    cmd = ['fping', '-q', '-s', '-c5', '-M', '-i 500', '-b {0}'.format(mtu)]
     p = subprocess.Popen(' '.join(cmd)+' '+' '.join(targets), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     res = p.communicate()
     for line in res[1].decode('utf-8').split('\n'):

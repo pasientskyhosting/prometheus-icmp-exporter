@@ -23,12 +23,12 @@ def get_mtu(interface):
     return res[0].decode('utf-8')
 
 def ping(targets):
-    ret = {} 
+    ret = {}
     # set mtu to test
     mtu = get_mtu(get_interface(targets[0]))
     mtu = mtu if mtu else 1500
-    mtu = str(int(mtu) - 28)   
-    cmd = ['fping', '-q', '-s', '-c3', '-b {0}'.format(mtu)]
+    mtu = str(int(mtu) - 28)
+    cmd = ['fping', '-q', '-s', '-c5', '-M', '-b {0}'.format(mtu)]
     p = subprocess.Popen(' '.join(cmd)+' '+' '.join(targets), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     res = p.communicate()
     for line in res[1].decode('utf-8').split('\n'):
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     config = getconfig()
     start_http_server(port=int(os.getenv('ICMP_METRICS_PORT', 9346)), addr=config['ipconfig'])
     while True:
-        pings = pingtargets(config) 
+        pings = pingtargets(config)
 
         for host in pings:
             if 'lat' in pings[host]:
